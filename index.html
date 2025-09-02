@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>김태건의 포트폴리오</title>
+
+  <style>
+    body { font-family: Arial, sans-serif; background:#f9fafb; text-align:center; padding:50px; }
+    h1 { color:#4f46e5; }
+    img.icon {
+      width:50px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display:inline-block;
+      margin-bottom:0px auto;
+      opacity:0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+    img.icon:hover {
+      transform: scale(2.0);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      border-radius:12px;
+    }
+
+    .icons {
+      display:flex;
+      justify-content:center;
+      gap:16px;
+    }
+    .icons a:nth-child(1) img.icon { animation-delay: 1.5s; }
+    .icons a:nth-child(2) img.icon { animation-delay: 1.7s; }
+    .icons a:nth-child(3) img.icon { animation-delay: 1.9s; }
+
+    h1, h2, h3, p, div, li {
+      opacity:0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+    h1 { animation-delay: .1s; }
+    h2 { animation-delay: .3s; }
+    h3 { animation-delay: .9s; }
+    li:nth-of-type(1) { animation-delay: .5s; }
+    li:nth-of-type(2) { animation-delay: .7s; }
+    p:nth-of-type(1){ animation-delay: 1.2s; }
+    p:nth-of-type(2){ animation-delay: 2.2s; }
+    @keyframes fadeUp {
+      to { opacity:1; transform: translateY(0); }
+    }
+    
+.pdf-link{
+  position: relative;
+  display:inline-block;
+  color:#000000;              
+  text-decoration:none;    
+  font-weight:600;
+  transition: color .2s ease, transform .2s ease;
+}
+
+.pdf-link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-3px;             
+  width:0;
+  height:2px;
+  background:#4f46e5;    
+  transition: width .25s ease;
+}
+
+.pdf-link:hover{
+  color:#4f46e5;         
+  transform: translateY(-1px);
+}
+.pdf-link:hover::after{
+  width:100%;
+}
+
+  </style>
+</head>
+<body>
+  <h1>안녕하세요🙇‍♂️ 저는 김태건입니다</h1>
+  <svg width="100%" height="10" viewBox="0 0 400 10" style="margin:0"></svg>
+
+  <div style="background:#fff; padding:30px; margin:20px auto; 
+            width:80%; max-width:1000px; 
+            border-radius:10px; box-shadow:0 4px 6px rgba(0,0,0,0.1); 
+            border:2px solid #e5e7eb;">
+    <h2>🎓학력 & 자격증🎓</h2>
+    <ul style="list-style:none; padding:0; margin:0">
+      <a href="docs/gtq.pdf" target="_blank" rel="noopener noreferrer" class="pdf-link" style="margin-bottom:5px;"><li>호서대학교 미디어커뮤니케이션 학사 취득</li></a>
+      <li><a href="docs/gtq.pdf" target="_blank" rel="noopener noreferrer" class="pdf-link">
+      포토샵 GTQ 1급</a></li>
+    </ul>
+
+    <h3>💻업무 능력🎥</h3>
+    <p style="margin-bottom:10px;"><span style="font-weight:bold;">영상편집</span>🎞️  가능
+        <br>(아이콘을 누르면 작업물 링크 연결)</p>
+
+    <div class="icons">
+      <a href="https://youtu.be/mSHIK7k29hM" target="_blank" rel="noopener noreferrer">
+        <img src="image/prepro.png" alt="프리미어프로" class="icon">
+      </a>
+      <a href="https://youtu.be/mSHIK7k29hM" target="_blank" rel="noopener noreferrer">
+        <img src="image/aftereffects.png" alt="애프터이펙트" class="icon">
+      </a>
+      <a href="https://youtu.be/mSHIK7k29hM" target="_blank" rel="noopener noreferrer">
+        <img src="image/photoshop.png" alt="포토샵" class="icon">
+      </a>
+     </div>
+    <p style="margin-top:10px;">간단한 홈페이지 만들기 가능</p>
+</body>
+</html>
