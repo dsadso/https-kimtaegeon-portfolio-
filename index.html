@@ -5,109 +5,253 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>김태건의 포트폴리오</title>
 
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- Typed.js -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
-    body { font-family: Arial, sans-serif; background:#f9fafb; text-align:center; padding:50px; }
-    h1 { color:#4f46e5; }
-    img.icon {
-      width:50px;
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(270deg, #0f172a, #1e293b, #0f172a);
+      background-size: 600% 600%;
+      animation: bgShift 18s ease infinite;
+      color: #e2e8f0;
+      text-align: center;
+    }
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Hero */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 1.3rem;
+      color: #cbd5e1;
+      margin-bottom: 24px;
+    }
+    .btn {
+      padding: 12px 24px;
+      background: #6366f1;
+      color: #fff;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: all .3s ease;
+    }
+    .btn:hover { background: #06b6d4; }
+
+    /* 카드 */
+    .card {
+      background: rgba(30,41,59,0.85);
+      padding: 30px;
+      margin: 40px auto;
+      width: 85%;
+      max-width: 900px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(99,102,241,0.5);
+    }
+    h2 { margin-bottom: 16px; }
+    p, li { color: #cbd5e1; line-height: 1.6; }
+    ul { list-style: none; padding: 0; margin: 0; }
+
+    /* 텍스트 hover 밑줄 */
+    a.text-link {
+      position: relative;
+      text-decoration: none;
+      color: #e2e8f0;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+    a.text-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 2px;
+      background: #6366f1;
+      transition: width .25s ease;
+    }
+    a.text-link:hover {
+      color: #93c5fd;
+    }
+    a.text-link:hover::after {
+      width: 100%;
+    }
+
+    /* 아이콘 hover 효과 */
+    .icon {
       transition: transform 0.25s ease, box-shadow 0.25s ease;
-      display:inline-block;
-      margin-bottom:0px auto;
-      opacity:0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s ease forwards;
+      cursor: pointer;
     }
-    img.icon:hover {
-      transform: scale(2.0);
+    .icon:hover {
+      transform: scale(1.5);
       box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-      border-radius:12px;
+      border-radius: 12px;
     }
 
-    .icons {
-      display:flex;
-      justify-content:center;
-      gap:16px;
+    /* Skill Chart */
+    #skillsChart {
+      max-width: 600px;
+      margin: auto;
     }
-    .icons a:nth-child(1) img.icon { animation-delay: 1.5s; }
-    .icons a:nth-child(2) img.icon { animation-delay: 1.7s; }
-    .icons a:nth-child(3) img.icon { animation-delay: 1.9s; }
 
-    h1, h2, h3, p, div, li {
-      opacity:0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s ease forwards;
+    /* Contact */
+    .contact-icons {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 20px;
     }
-    h1 { animation-delay: .1s; }
-    h2 { animation-delay: .3s; }
-    h3 { animation-delay: .9s; }
-    li:nth-of-type(1) { animation-delay: .5s; }
-    li:nth-of-type(2) { animation-delay: .7s; }
-    p:nth-of-type(1){ animation-delay: 1.2s; }
-    p:nth-of-type(2){ animation-delay: 2.2s; }
-    @keyframes fadeUp {
-      to { opacity:1; transform: translateY(0); }
+    .contact-icons a {
+      font-size: 1.5rem;
+      color: #93c5fd;
+      transition: transform .2s ease, color .2s ease;
     }
-    
-.pdf-link{
-  position: relative;
-  display:inline-block;
-  color:#000000;              
-  text-decoration:none;    
-  font-weight:600;
-  transition: color .2s ease, transform .2s ease;
-}
-
-.pdf-link::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-3px;             
-  width:0;
-  height:2px;
-  background:#4f46e5;    
-  transition: width .25s ease;
-}
-
-.pdf-link:hover{
-  color:#4f46e5;         
-  transform: translateY(-1px);
-}
-.pdf-link:hover::after{
-  width:100%;
-}
-
+    .contact-icons a:hover {
+      color: #06b6d4;
+      transform: scale(1.2);
+    }
   </style>
 </head>
 <body>
-  <h1>안녕하세요🙇‍♂️ 저는 김태건입니다</h1>
-  <svg width="100%" height="10" viewBox="0 0 400 10" style="margin:0"></svg>
+  <!-- Hero -->
+  <section class="hero" data-aos="fade-up">
+    <h1>안녕하세요 🙇‍♂️ 저는 김태건입니다</h1>
+    <p><span id="typed"></span></p>
+    <a href="#portfolio" class="btn">포트폴리오 보기</a>
+  </section>
 
-  <div style="background:#fff; padding:30px; margin:20px auto; 
-            width:80%; max-width:1000px; 
-            border-radius:10px; box-shadow:0 4px 6px rgba(0,0,0,0.1); 
-            border:2px solid #e5e7eb;">
-    <h2>🎓학력 & 자격증🎓</h2>
-    <ul style="list-style:none; padding:0; margin:0">
-      <a href="docs/gtq.pdf" target="_blank" rel="noopener noreferrer" class="pdf-link" style="margin-bottom:5px;"><li>호서대학교 미디어커뮤니케이션 학사 취득</li></a>
-      <li><a href="docs/gtq.pdf" target="_blank" rel="noopener noreferrer" class="pdf-link">
-      포토샵 GTQ 1급</a></li>
-    </ul>
+  <!-- 학력 & 자격증 -->
+  <div class="card" data-aos="fade-up">
+    <h2>🎓 학력 & 자격증</h2>
+    <p><a href="#" class="text-link">2020 - 2025 : 호서대학교 미디어커뮤니케이션 학사 취득</a></p>
+    <p><a href="docs/gtq.pdf" target="_blank" class="text-link">자격증 : 포토샵 GTQ 1급</a></p>
+  </div>
 
-    <h3>💻업무 능력🎥</h3>
-    <p style="margin-bottom:10px;"><span style="font-weight:bold;">영상편집</span>🎞️  가능
-        <br>(아이콘을 누르면 작업물 링크 연결)</p>
+  <!-- Skill Chart -->
+  <div class="card" data-aos="fade-up">
+    <h2>🛠️ 기술 & 툴</h2>
+    <canvas id="skillsChart"></canvas>
+  </div>
 
-    <div class="icons">
-      <a href="https://youtu.be/mSHIK7k29hM" target="_blank" rel="noopener noreferrer">
-        <img src="image/prepro.png" alt="프리미어프로" class="icon">
-      </a>
-      <a href="https://youtu.be/mSHIK7k29hM" target="_blank" rel="noopener noreferrer">
-        <img src="image/aftereffects.png" alt="애프터이펙트" class="icon">
-      </a>
-      <a href="https://youtu.be/mSHIK7k29hM" target="_blank" rel="noopener noreferrer">
-        <img src="image/photoshop.png" alt="포토샵" class="icon">
-      </a>
-     </div>
-    <p style="margin-top:10px;">간단한 홈페이지 만들기 가능</p>
+  <!-- Portfolio -->
+  <div class="card" data-aos="fade-up" id="portfolio">
+    <h2>💻 프로젝트 & 작업물</h2>
+    <p>아래 아이콘을 클릭하면 작업물 미리보기를 확인할 수 있습니다 🎥</p>
+    <div class="icons" style="display:flex; gap:30px; justify-content:center;">
+      <img src="image/prepro.png" alt="프리미어프로" class="icon work" width="70">
+      <img src="image/aftereffects.png" alt="애프터이펙트" class="icon work" width="70">
+      <img src="image/photoshop.png" alt="포토샵" class="icon work" width="70">
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="card" data-aos="fade-up">
+    <h2>📞 Contact</h2>
+    <p>저와 함께하고 싶으시다면 아래 방법으로 연락주세요!</p>
+    <div class="contact-icons">
+      <a href="mailto:yourmail@example.com">📧</a>
+      <a href="https://linkedin.com" target="_blank">💼</a>
+      <a href="https://open.kakao.com" target="_blank">💬</a>
+      <a href="docs/resume.pdf" target="_blank">📄</a>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:1000;">
+    <div style="position:relative; max-width:90%; max-height:80%;">
+      <button id="modalClose" style="position:absolute; top:10px; right:15px; font-size:24px; background:none; border:none; color:white; cursor:pointer;">×</button>
+      <iframe id="modalVideo" width="560" height="315" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>
+    </div>
+  </div>
+
+  <script>
+    // AOS
+    AOS.init({ duration: 1000, once: true });
+
+    // Typed.js
+    var typed = new Typed("#typed", {
+      strings: ["영상 편집자", "웹 퍼블리셔 준비생", "크리에이티브 제작자"],
+      typeSpeed: 60,
+      backSpeed: 40,
+      loop: true
+    });
+
+    // Chart.js
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['Premiere Pro', 'After Effects', 'Photoshop', 'HTML', 'CSS', 'AI'],
+        datasets: [{
+          label: 'Skill Level',
+          data: [90, 80, 85, 60, 55, 70],
+          backgroundColor: 'rgba(99, 102, 241, 0.3)',
+          borderColor: '#6366f1',
+          borderWidth: 2,
+          pointBackgroundColor: '#06b6d4'
+        }]
+      },
+      options: {
+        scales: {
+          r: {
+            angleLines: { color: '#334155' },
+            grid: { color: '#475569' },
+            suggestedMin: 0,
+            suggestedMax: 100,
+            ticks: {
+              color: '#cbd5e1',
+              backdropColor: 'transparent' /* 텍스트 배경 제거 */
+            }
+          }
+        },
+        plugins: {
+          legend: { labels: { color: '#e2e8f0' } }
+        }
+      }
+    });
+
+    // Modal
+    const works = document.querySelectorAll(".work");
+    const modal = document.getElementById("modal");
+    const modalVideo = document.getElementById("modalVideo");
+    const modalClose = document.getElementById("modalClose");
+
+    works.forEach((work) => {
+      work.addEventListener("click", () => {
+        modal.style.display = "flex";
+        modalVideo.src = "https://www.youtube.com/embed/mSHIK7k29hM?autoplay=1&rel=0";
+      });
+    });
+    modalClose.addEventListener("click", () => {
+      modal.style.display = "none";
+      modalVideo.src = "";
+    });
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+        modalVideo.src = "";
+      }
+    });
+  </script>
 </body>
 </html>
