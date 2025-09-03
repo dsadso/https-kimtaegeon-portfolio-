@@ -24,6 +24,7 @@
       animation: bgShift 18s ease infinite;
       color: #e2e8f0;
       text-align: center;
+      scroll-behavior: smooth; /* 부드러운 스크롤 */
     }
     @keyframes bgShift {
       0% { background-position: 0% 50%; }
@@ -39,15 +40,8 @@
       justify-content: center;
       align-items: center;
     }
-    .hero h1 {
-      font-size: 2.8rem;
-      margin-bottom: 12px;
-    }
-    .hero p {
-      font-size: 1.3rem;
-      color: #cbd5e1;
-      margin-bottom: 24px;
-    }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 12px; }
+    .hero p { font-size: 1.3rem; color: #cbd5e1; margin-bottom: 24px; }
     .btn {
       padding: 12px 24px;
       background: #6366f1;
@@ -68,6 +62,7 @@
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(99,102,241,0.5);
     }
+
     h2 { margin-bottom: 16px; }
     p, li { color: #cbd5e1; line-height: 1.6; }
     ul { list-style: none; padding: 0; margin: 0; }
@@ -83,19 +78,13 @@
     a.text-link::after {
       content: "";
       position: absolute;
-      left: 0;
-      bottom: -3px;
-      width: 0;
-      height: 2px;
+      left: 0; bottom: -3px;
+      width: 0; height: 2px;
       background: #6366f1;
       transition: width .25s ease;
     }
-    a.text-link:hover {
-      color: #93c5fd;
-    }
-    a.text-link:hover::after {
-      width: 100%;
-    }
+    a.text-link:hover { color: #93c5fd; }
+    a.text-link:hover::after { width: 100%; }
 
     /* 아이콘 hover 효과 */
     .icon {
@@ -109,10 +98,7 @@
     }
 
     /* Skill Chart */
-    #skillsChart {
-      max-width: 600px;
-      margin: auto;
-    }
+    #skillsChart { max-width: 600px; margin: auto; }
 
     /* Contact */
     .contact-icons {
@@ -130,25 +116,94 @@
       color: #06b6d4;
       transform: scale(1.2);
     }
+
+    /* Modal */
+    .modal {
+      display:none; position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(0,0,0,0.85);
+      justify-content:center; align-items:center;
+      z-index:1000;
+    }
+    .modal-content {
+      position:relative;
+      width:60vw; height:60vh;
+      display:flex; justify-content:center; align-items:center;
+    }
+    #modalClose {
+      position:absolute; top:-40px; right:-40px;
+      font-size:28px; width:40px; height:40px;
+      border-radius:50%; background:#fff; color:#000;
+      border:none; cursor:pointer; font-weight:bold;
+      box-shadow:0 2px 6px rgba(0,0,0,0.5);
+    }
+    #modalVideo { width:100%; height:100%; border-radius:10px; }
+    /* 모바일 대응 */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 1.8rem; /* 제목 작게 */
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+  .btn {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+
+  .card {
+    width: 95%;   /* 카드 폭 더 넓게 */
+    padding: 20px;
+    margin: 20px auto;
+  }
+
+  .icons {
+    flex-direction: column; /* 아이콘 세로 정렬 */
+    align-items: center;
+    gap: 20px;
+  }
+  .icons img {
+    width: 50px; /* 아이콘 크기 줄이기 */
+  }
+
+  #skillsChart {
+    max-width: 90%; /* 차트 폭 줄이기 */
+  }
+
+  .modal-content {
+    width: 90vw;   /* 모달 영상 모바일 최적화 */
+    height: 50vh;
+  }
+
+  #modalClose {
+    top: -30px;
+    right: -30px;
+    font-size: 24px;
+    width: 35px;
+    height: 35px;
+  }
+}
   </style>
 </head>
 <body>
   <!-- Hero -->
   <section class="hero" data-aos="fade-up">
-    <h1>안녕하세요 🙇‍♂️ 저는 김태건입니다</h1>
+    <h1>안녕하세요🙇‍♂️ 저는 김태건입니다</h1>
     <p><span id="typed"></span></p>
-    <a href="#portfolio" class="btn">포트폴리오 보기</a>
+    <!-- 버튼을 그냥 #education으로 이동 -->
+    <a href="#education" class="btn" id="portfolioBtn">포트폴리오 보기</a>
   </section>
 
   <!-- 학력 & 자격증 -->
-  <div class="card" data-aos="fade-up">
+  <div class="card" data-aos="fade-up" id="education">
     <h2>🎓 학력 & 자격증</h2>
-    <p><a href="#" class="text-link">2020 - 2025 : 호서대학교 미디어커뮤니케이션 학사 취득</a></p>
+    <p><a href="docs/gtq.pdf" target="_blank" class="text-link">2020 - 2025 : 호서대학교 미디어커뮤니케이션 학사 취득</a></p>
     <p><a href="docs/gtq.pdf" target="_blank" class="text-link">자격증 : 포토샵 GTQ 1급</a></p>
   </div>
 
   <!-- Skill Chart -->
-  <div class="card" data-aos="fade-up">
+  <div class="card" data-aos="fade-up" id="skills">
     <h2>🛠️ 기술 & 툴</h2>
     <canvas id="skillsChart"></canvas>
   </div>
@@ -177,10 +232,10 @@
   </div>
 
   <!-- Modal -->
-  <div class="modal" id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:1000;">
-    <div style="position:relative; max-width:90%; max-height:80%;">
-      <button id="modalClose" style="position:absolute; top:10px; right:15px; font-size:24px; background:none; border:none; color:white; cursor:pointer;">×</button>
-      <iframe id="modalVideo" width="560" height="315" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button id="modalClose">×</button>
+      <iframe id="modalVideo" src="" frameborder="0" allowfullscreen></iframe>
     </div>
   </div>
 
@@ -220,7 +275,7 @@
             suggestedMax: 100,
             ticks: {
               color: '#cbd5e1',
-              backdropColor: 'transparent' /* 텍스트 배경 제거 */
+              backdropColor: 'transparent'
             }
           }
         },
@@ -242,15 +297,26 @@
         modalVideo.src = "https://www.youtube.com/embed/mSHIK7k29hM?autoplay=1&rel=0";
       });
     });
+
     modalClose.addEventListener("click", () => {
       modal.style.display = "none";
       modalVideo.src = "";
     });
+
     modal.addEventListener("click", (e) => {
       if (e.target === modal) {
         modal.style.display = "none";
         modalVideo.src = "";
       }
+    });
+
+    // 📌 버튼 클릭 시 education 섹션으로 이동 + 약간 오프셋 조정
+    document.getElementById("portfolioBtn").addEventListener("click", function(e) {
+      e.preventDefault();
+      const edu = document.getElementById("education");
+      const yOffset = -20; // 조금 위로 여백 주기
+      const y = edu.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({top: y, behavior: 'smooth'});
     });
   </script>
 </body>
