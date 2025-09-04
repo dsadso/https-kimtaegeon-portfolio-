@@ -98,7 +98,7 @@
     .icons {
       display: flex;
       justify-content: center;
-      gap: 40px; /* 간격 넓힘 */
+      gap: 40px;
       margin-top: 20px;
     }
     .icon {
@@ -111,26 +111,36 @@
       border-radius: 12px;
     }
 
-    /* Skill Chart */
-    #skillsChart { max-width: 600px; margin: auto; }
+    /* ✅ Skill Chart 중앙정렬 & 크기 안정화 */
+    .chart-container{
+      width: min(640px, 90%);
+      margin: 0 auto;
+      position: relative;
+    }
+    #skillsChart{
+      width: 100% !important;   /* 부모 폭에 맞춤 */
+      height: 420px !important; /* 고정 높이로 과대화 방지 */
+    }
 
     /* Contact */
-    .contact-icons {
+    .contact-info {
       display: flex;
       justify-content: center;
-      gap: 24px;
+      gap: 40px;
       margin-top: 20px;
+      font-size: 1.1rem;
+      color: #e2e8f0;
     }
-    .contact-icons a {
-      font-size: 1.5rem;
-      color: #93c5fd;
-      transition: transform .2s ease, color .2s ease;
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .contact-icons a:hover {
-      color: #06b6d4;
-      transform: scale(1.2);
-    }
-
+    .highlight {
+  background: rgba(99, 102, 241, 0.3); /* 보라색 투명 배경 */
+  padding: 2px 6px;  /* 안쪽 여백 */
+  border-radius: 6px; /* 모서리 둥글게 */
+}
     /* Modal */
     .modal {
       display:none; position:fixed;
@@ -159,12 +169,11 @@
       .hero h1 { font-size: 1.8rem; }
       .btn { padding: 10px 18px; font-size: 0.9rem; }
       .card { width: 95%; padding: 20px; margin: 20px auto; }
-      #skillsChart { max-width: 100%; }
-      .icons {
-        gap: 20px;
-      }
+      #skillsChart { height: 320px !important; } /* 모바일에서 약간 더 작게 */
+      .icons { gap: 20px; }
       .icons img { width: 60px; }
       .modal-content { width: 90vw; height: 50vh; }
+      .contact-info { flex-direction: column; gap: 12px; }
     }
   </style>
 </head>
@@ -172,7 +181,7 @@
   <!-- Hero -->
   <section class="hero">
     <h1>
-      안녕하세요🙇‍♂️ <span id="typed"></span> 김태건입니다
+      안녕하세요🙇‍♂️ <span id="typed"></span>김태건입니다
     </h1>
     <a href="#education" class="btn" id="portfolioBtn">포트폴리오 보기</a>
   </section>
@@ -184,16 +193,29 @@
     <p><a href="docs/gtq.pdf" target="_blank" class="text-link">자격증 : 포토샵 GTQ 1급</a></p>
   </div>
 
+  <!-- About Me -->
+  <div class="card" id="about">
+    <h2>🙋 About Me</h2>
+    <p>
+      저는 맡은 작업을 끝까지 완성해야 직성이 풀리는 타입입니다.<br>
+      <span class= "highlight", style= "font-size:1.2em; font-weight: bold;">AI 활용</span>을 어색해하지 않고, 제 것으로 소화할 수 있습니다.<br>
+      또한 <span class="highlight">최신 트렌드와 밈을 빠르게 이해</span>하고 이를 작업물에 자연스럽게 반영하여,<br>
+      공감과 재미를 줄 수 있는 사람입니다.
+    </p>
+  </div>
+
   <!-- Skill Chart -->
   <div class="card" id="skills">
     <h2>🛠️ 기술 & 툴</h2>
-    <canvas id="skillsChart"></canvas>
+    <div class="chart-container">
+      <canvas id="skillsChart"></canvas>
+    </div>
   </div>
 
   <!-- Portfolio -->
   <div class="card" id="portfolio">
     <h2>💻 프로젝트 & 작업물</h2>
-    <p>아래 아이콘을 클릭하면 작업물 미리보기를 확인할 수 있습니다 🎥</p>
+    <p>아래 아이콘을 클릭하면 <span class="highlight", style="font-weight: bold;"> 작업물 미리보기</span>를 확인할 수 있습니다 🎥</p>
     <div class="icons">
       <img src="image/prepro.png" alt="프리미어프로" class="icon work" width="80">
       <img src="image/aftereffects.png" alt="애프터이펙트" class="icon work" width="80">
@@ -204,12 +226,9 @@
   <!-- Contact -->
   <div class="card">
     <h2>📞 Contact</h2>
-    <p>저와 함께하고 싶으시다면 아래 방법으로 연락주세요!</p>
-    <div class="contact-icons">
-      <a href="mailto:yourmail@example.com">📧</a>
-      <a href="https://linkedin.com" target="_blank">💼</a>
-      <a href="https://open.kakao.com" target="_blank">💬</a>
-      <a href="docs/resume.pdf" target="_blank">📄</a>
+    <div class="contact-info">
+      <div class="contact-item">📞 : 010-4347-8980</div>
+      <div class="contact-item">📧 : narara0801@naver.com</div>
     </div>
   </div>
 
@@ -224,14 +243,14 @@
   <script>
     // Typed.js
     var typed = new Typed("#typed", {
-      strings: ["저는", "영상 편집자", "웹 퍼블리셔 준비생", "크리에이티브 제작자"],
+      strings: ["저는", "영상 편집자", "열정적인", "성실한","노력하는"],
       typeSpeed: 80,
       backSpeed: 50,
       loop: true
     });
 
     // Chart.js 데이터
-    const skillData = [90, 80, 85, 60, 55, 70];
+    const skillData = [80, 75, 70, 85, 100, 100];
     const ctx = document.getElementById('skillsChart').getContext('2d');
     let skillsChart;
 
@@ -240,7 +259,7 @@
       skillsChart = new Chart(ctx, {
         type: 'radar',
         data: {
-          labels: ['Premiere Pro', 'After Effects', 'Photoshop', 'HTML', 'CSS', 'AI'],
+          labels: ['Premiere Pro', 'After Effects', 'Photoshop', 'AI', 'Passion', 'Conscientious & Humorous'],
           datasets: [{
             label: 'Skill Level',
             data: [0, 0, 0, 0, 0, 0],
@@ -251,9 +270,12 @@
           }]
         },
         options: {
+          responsive: true,
+          maintainAspectRatio: false,              // ✅ CSS 높이에 맞춤
+          layout: { padding: { top: 20, right: 20, bottom: 20, left: 20 } }, // ✅ 라벨 여유공간
           animation: {
-            duration: 100,
-            easing: 'easeInOutQuad',
+            duration: 600,
+            easing: 'easeOutElastic',
             onProgress: function(animation) {
               const factor = animation.currentStep / animation.numSteps;
               skillsChart.data.datasets[0].data = skillData.map(v => v * factor);
@@ -266,7 +288,13 @@
               grid: { color: '#475569' },
               suggestedMin: 0,
               suggestedMax: 100,
+              pointLabels: {
+                color: '#cbd5e1',
+                padding: 8,                      // ✅ 라벨 캔버스 가장자리와 간격
+                font: { size: 13, weight: '600' }
+              },
               ticks: {
+                stepSize: 20,
                 color: '#cbd5e1',
                 backdropColor: 'transparent'
               }
@@ -279,7 +307,7 @@
       });
     }
 
-    // 📌 Intersection Observer
+    // 📌 Intersection Observer (원본 기능 유지)
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -295,7 +323,7 @@
 
     document.querySelectorAll('.card').forEach(card => observer.observe(card));
 
-    // Modal
+    // Modal (원본 기능 유지)
     const works = document.querySelectorAll(".work");
     const modal = document.getElementById("modal");
     const modalVideo = document.getElementById("modalVideo");
@@ -320,7 +348,7 @@
       }
     });
 
-    // 포트폴리오 버튼 → 학력 섹션 이동
+    // 포트폴리오 버튼 → 학력 섹션 이동 (원본 유지)
     document.getElementById("portfolioBtn").addEventListener("click", function(e) {
       e.preventDefault();
       const edu = document.getElementById("education");
