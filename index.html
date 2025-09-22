@@ -16,6 +16,16 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
+    :root{
+      --card-w: 85%;
+      --card-pad: clamp(16px, 2.4vw, 30px);
+      --h1: clamp(1.6rem, 3.5vw + 1rem, 2.8rem);
+      --h2: clamp(1.2rem, 1.4vw + 1rem, 1.6rem);
+      --p:  clamp(1rem, 0.6vw + 0.85rem, 1.05rem);
+    }
+
+    /* 전체 타이포 & 줄바꿈 */
+    *{box-sizing:border-box}
     body {
       margin: 0;
       font-family: 'Segoe UI', Arial, sans-serif;
@@ -23,7 +33,10 @@
       color: #e2e8f0;
       text-align: center;
       scroll-behavior: smooth;
+      word-break: keep-all;        /* 한국어 어절 단위 줄바꿈 */
+      overflow-wrap: break-word;   /* 너무 긴 단어(URL 등)는 안전하게 줄바꿈 */
     }
+    h1,h2{ text-wrap: balance; }   /* 제목 균형 잡힌 줄바꿈 */
 
     /* ✅ 배경 메쉬 애니메이션 */
     .bg-mesh{
@@ -60,45 +73,47 @@
 
     /* Hero */
     .hero {
-      height: 100vh;
+      min-height: 100svh; /* 모바일 주소창 고려한 실제 뷰포트 높이 */
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
+      padding: 0 16px;
     }
-    .hero h1 { font-size: 2.8rem; margin-bottom: 20px; }
+    .hero h1 { font-size: var(--h1); margin-bottom: 20px; line-height:1.25; }
     .btn {
       margin-top: 24px;
-      padding: 14px 28px;
+      padding: 12px 24px;
       background: #6366f1;
       color: #fff;
       border-radius: 30px;
       text-decoration: none;
       transition: all .3s ease;
+      font-size: clamp(.9rem, .5vw + .8rem, 1rem);
     }
     .btn:hover { background: #06b6d4; }
 
     /* 카드 */
     .card {
       background: rgba(30,41,59,0.85);
-      padding: 30px;
-      margin: 40px auto;
-      width: 85%;
-      max-width: 900px;
+      padding: var(--card-pad);
+      margin: clamp(16px, 4vw, 40px) auto;
+      width: min(var(--card-w), 900px);
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(99,102,241,0.5);
       opacity: 0;
       transform: translateY(50px);
       transition: all 0.6s ease;
+      text-align: center;
     }
     .card.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    h2 { margin-bottom: 16px; }
-    p, li { color: #cbd5e1; line-height: 1.6; }
+    h2 { margin-bottom: 12px; font-size: var(--h2); }
+    p, li { color: #cbd5e1; line-height: 1.7; font-size: var(--p); margin: .4rem 0; }
     ul { list-style: none; padding: 0; margin: 0; }
 
     /* 텍스트 hover 밑줄 */
@@ -120,42 +135,48 @@
     a.text-link:hover { color: #93c5fd; }
     a.text-link:hover::after { width: 100%; }
 
-    /* 아이콘 hover 효과 */
+    /* 아이콘 영역 */
     .icons {
       display: flex;
       justify-content: center;
-      gap: 40px;
-      margin-top: 20px;
+      align-items:center;
+      gap: clamp(16px, 3.5vw, 40px);
+      margin-top: 16px;
+      flex-wrap: wrap; /* ✅ 모바일에서 줄바꿈 */
     }
     .icon {
       transition: transform 0.25s ease, box-shadow 0.25s ease;
       cursor: pointer;
+      width: clamp(56px, 8vw, 80px); /* ✅ 유동 크기 */
+      height: auto;
     }
     .icon:hover {
-      transform: scale(1.2);
+      transform: scale(1.12);
       box-shadow: 0 6px 12px rgba(0,0,0,0.3);
       border-radius: 12px;
     }
 
     /* Skill Chart */
     .chart-container{
-      width: min(640px, 90%);
-      margin: 0 auto;
+      width: min(640px, 95%);
+      margin: 8px auto 0;
       position: relative;
+      height: clamp(260px, 58vw, 420px);  /* ✅ 뷰포트 기반 높이 */
     }
     #skillsChart{
       width: 100% !important;
-      height: 420px !important;
+      height: 100% !important; /* 컨테이너에 맞춤 */
     }
 
     /* Contact */
     .contact-info {
       display: flex;
       justify-content: center;
-      gap: 40px;
-      margin-top: 20px;
-      font-size: 1.1rem;
+      gap: clamp(16px, 6vw, 40px);
+      margin-top: 12px;
+      font-size: clamp(1rem, .6vw + .9rem, 1.1rem);
       color: #e2e8f0;
+      flex-wrap: wrap; /* ✅ 줄바꿈 허용 */
     }
     .contact-item { display: flex; align-items: center; gap: 8px; }
 
@@ -168,37 +189,38 @@
     /* Modal */
     .modal {
       display:none; position:fixed;
-      top:0; left:0;
-      width:100%; height:100%;
+      inset:0;
       background:rgba(0,0,0,0.85);
       justify-content:center; align-items:center;
       z-index:1000;
+      padding: 16px; /* 좁은 화면 여백 */
     }
     .modal-content {
       position:relative;
-      width:60vw; height:60vh;
+      width: clamp(300px, 92vw, 900px);
+      height: clamp(280px, 70svh, 720px);
       display:flex; justify-content:center; align-items:center;
-      overflow:hidden; /* ★ 이미지/영상 스크롤바 숨김 */
-      border-radius:10px; /* ★ 모서리 일관성 */
-      background:#111;   /* ★ 이미지 로딩 중 배경 */
+      overflow:hidden;
+      border-radius:12px;
+      background:#111;
     }
     #modalClose {
-      position:absolute; top:-40px; right:-40px;
-      font-size:28px; width:40px; height:40px;
+      position:absolute; top:-16px; right:-16px;
+      font-size:20px; width:36px; height:36px;
       border-radius:50%; background:#fff; color:#000;
       border:none; cursor:pointer; font-weight:bold;
       box-shadow:0 2px 6px rgba(0,0,0,0.5);
     }
-    #modalVideo { width:100%; height:100%; border-radius:10px; }
+    #modalVideo { width:100%; height:100%; border-radius:12px; }
 
-    /* ★ 이미지 모달 전용 스타일 */
+    /* 이미지 모달 전용 */
     #modalImage{
-      display:none;           /* 기본은 숨김(영상 우선) */
+      display:none;
       width:100%;
       height:100%;
-      object-fit:contain;     /* 비율 유지 + 전체 보이기 */
-      object-position:center; /* 중앙 정렬 */
-      border-radius:10px;
+      object-fit:contain;
+      object-position:center;
+      border-radius:12px;
     }
 
     /* 유튜브 아이콘 (텍스트 옆) */
@@ -206,11 +228,12 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 1.02rem;
+      font-size: clamp(.95rem, .5vw + .85rem, 1.02rem);
+      flex-wrap: wrap;
     }
     .yt-inline img {
-      width: 30px;
-      height: 20px;
+      width: clamp(22px, 4vw, 30px);
+      height: auto;
       object-fit: contain;
       transition: transform 0.2s ease, filter 0.2s ease;
       cursor: pointer;
@@ -219,19 +242,17 @@
       top: 0px;
     }
     .yt-inline img:hover {
-      transform: scale(1.2);
-      filter: brightness(1.3);
+      transform: scale(1.12);
+      filter: brightness(1.15);
     }
 
-    /* 반응형 */
+    /* 반응형 추가 미세조정 */
     @media (max-width: 768px) {
-      .hero h1 { font-size: 1.8rem; }
-      .btn { padding: 10px 18px; font-size: 0.9rem; }
-      .card { width: 95%; padding: 20px; margin: 20px auto; }
-      #skillsChart { height: 320px !important; }
-      .icons { gap: 20px; }
-      .icons img { width: 60px; }
-      .modal-content { width: 90vw; height: 60vh; } /* ★ 모바일에서 조금 더 크게 */
+      .card { width: 92%; }
+      .hero { padding: 0 12px; }
+      .modal-content { height: clamp(300px, 70svh, 640px); }
+      /* 안내문을 블록으로 전환해 가독성 개선 */
+      .yt-inline { display:block; line-height:1.9; }
     }
   </style>
 </head>
@@ -251,9 +272,7 @@
 
   <!-- Hero -->
   <section class="hero" id="home">
-    <h1>
-      안녕하세요🙇‍♂️ <span id="typed"></span>김태건입니다
-    </h1>
+    <h1>안녕하세요🙇‍♂️ <span id="typed"></span>김태건입니다</h1>
     <a href="#education" class="btn" id="portfolioBtn">포트폴리오 보기</a>
   </section>
 
@@ -269,7 +288,7 @@
     <h2>🙋 About Me</h2>
     <p>
       저는 맡은 작업을 끝까지 완성해야 직성이 풀리는 타입입니다.<br>
-      <span class="highlight" style="font-size:1.1em; font-weight: bold;">AI 활용</span>을 어색해하지 않고, 제 것으로 소화할 수 있습니다.<br>
+      <span class="highlight" style="font-size:1.05em; font-weight: bold;">AI 활용</span>을 어색해하지 않고, 제 것으로 소화할 수 있습니다.<br>
       또한 <span class="highlight">최신 트렌드와 밈을 빠르게 이해</span>하고 이를 작업물에 자연스럽게 반영하여,<br>
       공감과 재미를 줄 수 있는 사람입니다.
     </p>
@@ -286,13 +305,13 @@
   <!-- Portfolio -->
   <div class="card" id="portfolio">
     <h2>💻 프로젝트 & 작업물</h2>
-    <p>아래 아이콘을 클릭하면 <span class="highlight" style="font-weight: bold;"> 작업물 미리보기</span>를 확인할 수 있습니다 🎥</p>
+    <p>아래 아이콘을 클릭하면 <span class="highlight" style="font-weight: bold;">작업물 미리보기</span>를 확인할 수 있습니다 🎥</p>
     <div class="icons">
-      <img src="image/prepro.png" alt="프리미어프로" class="icon work" width="80"
+      <img src="image/prepro.png" alt="프리미어프로" class="icon work"
            data-url="https://www.youtube.com/embed/i25ZiUpCnVc">
-      <img src="image/aftereffects.png" alt="애프터이펙트" class="icon work" width="80"
+      <img src="image/aftereffects.png" alt="애프터이펙트" class="icon work"
            data-url="https://www.youtube.com/embed/mSHIK7k29hM">
-      <img src="image/photoshop.png" alt="포토샵" class="icon work" width="80"
+      <img src="image/photoshop.png" alt="포토샵" class="icon work"
            data-url="docs/photoshop12.png">
     </div>
 
@@ -300,9 +319,9 @@
     <p class="yt-inline">
       또 다른 작업물은 <span class="highlight" style="font-weight: bold;">유튜브 아이콘
         <a href="https://www.youtube.com/playlist?list=PLTmkD0z4EsEaExw1RM1K4Yqs4Np7Bnhgi" target="_blank">
-          <img src="image/youtube.png" alt="유튜브 아이콘"></a><span style="font-size: 0.8em;">(Premiere Pro)</span>
+          <img src="image/youtube.png" alt="유튜브 아이콘"></a><span style="font-size: 0.85em;">(Premiere Pro)</span>
         <a href="https://www.youtube.com/playlist?list=PLTmkD0z4EsEaw0RcQuvtws-oBCaGos3Sj" target="_blank">
-          <img src="image/youtube.png" alt="유튜브 아이콘"></a><span style="font-size: 0.8em;">(After Effects)</span></span>
+          <img src="image/youtube.png" alt="유튜브 아이콘"></a><span style="font-size: 0.85em;">(After Effects)</span></span>
       을 클릭해주세요!
     </p>
   </div>
@@ -319,9 +338,9 @@
   <!-- Modal -->
   <div class="modal" id="modal">
     <div class="modal-content">
-      <button id="modalClose">×</button>
+      <button id="modalClose" aria-label="close">×</button>
       <iframe id="modalVideo" src="" frameborder="0" allowfullscreen></iframe>
-      <img id="modalImage" alt="미리보기 이미지"> <!-- ★ 이미지용 요소 추가 -->
+      <img id="modalImage" alt="미리보기 이미지">
     </div>
   </div>
 
@@ -356,8 +375,8 @@
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false,
-          layout: { padding: { top: 20, right: 20, bottom: 20, left: 20 } },
+          maintainAspectRatio: false, // 캔버스가 부모(.chart-container) 크기를 따르도록
+          layout: { padding: { top: 10, right: 10, bottom: 10, left: 10 } },
           animation: {
             duration: 600,
             easing: 'easeOutElastic',
@@ -375,13 +394,14 @@
               suggestedMax: 100,
               pointLabels: {
                 color: '#cbd5e1',
-                padding: 8,
-                font: { size: 13, weight: '600' }
+                padding: 6,
+                font: { size: 12, weight: '600' }
               },
               ticks: {
                 stepSize: 20,
                 color: '#cbd5e1',
-                backdropColor: 'transparent'
+                backdropColor: 'transparent',
+                showLabelBackdrop: false
               }
             }
           },
@@ -412,26 +432,22 @@
     const works = document.querySelectorAll(".work");
     const modal = document.getElementById("modal");
     const modalVideo = document.getElementById("modalVideo");
-    const modalImage = document.getElementById("modalImage"); // ★
+    const modalImage = document.getElementById("modalImage");
     const modalClose = document.getElementById("modalClose");
 
-    // ★ 클릭 시 확장자에 따라 영상/이미지 분기
+    // 클릭 시 확장자에 따라 영상/이미지 분기
     works.forEach((work) => {
       work.addEventListener("click", () => {
         const url = work.getAttribute("data-url") || "";
         modal.style.display = "flex";
 
-        const lower = url.toLowerCase();
-        const isImage = /\.(png|jpe?g|gif|webp)$/i.test(lower);
-
+        const isImage = /\.(png|jpe?g|gif|webp)$/i.test(url.toLowerCase());
         if (isImage) {
-          // 이미지 모드
           modalVideo.style.display = "none";
-          modalVideo.src = "";               // 영상 정지
+          modalVideo.src = "";
           modalImage.style.display = "block";
-          modalImage.src = url;              // object-fit: contain으로 전체 보임
+          modalImage.src = url;
         } else {
-          // 영상(유튜브) 모드
           modalImage.style.display = "none";
           modalImage.src = "";
           modalVideo.style.display = "block";
@@ -441,19 +457,13 @@
     });
 
     // 닫기
-    modalClose.addEventListener("click", () => {
+    const closeModal = () => {
       modal.style.display = "none";
       modalVideo.src = "";
-      modalImage.src = ""; // ★ 이미지도 초기화
-    });
-
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.style.display = "none";
-        modalVideo.src = "";
-        modalImage.src = ""; // ★
-      }
-    });
+      modalImage.src = "";
+    };
+    modalClose.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
 
     // 포트폴리오 버튼 → 학력 섹션 이동
     document.getElementById("portfolioBtn").addEventListener("click", function(e) {
@@ -462,6 +472,17 @@
       const yOffset = -80;
       const y = edu.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({top: y, behavior: 'smooth'});
+    });
+
+    // ✅ 리사이즈 시 차트 비율 재계산 (디바운스)
+    let rAF;
+    window.addEventListener('resize', () => {
+      if (rAF) cancelAnimationFrame(rAF);
+      rAF = requestAnimationFrame(() => {
+        if (document.getElementById('skills').classList.contains('visible')) {
+          createChart();
+        }
+      });
     });
   </script>
 </body>
