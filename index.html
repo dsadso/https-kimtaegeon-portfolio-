@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- ✅ 데스크탑 그대로 모드: 뷰포트 고정 -->
+  <meta name="viewport" content="width=1100"/>
   <title>김태건의 포트폴리오</title>
 
   <!-- AOS -->
@@ -25,6 +26,10 @@
     }
 
     *{box-sizing:border-box}
+
+    /* ✅ 데스크탑 레이아웃을 강제로 유지 */
+    html, body { min-width: 1100px; }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', Arial, sans-serif;
@@ -32,7 +37,7 @@
       color: #e2e8f0;
       text-align: center;
       scroll-behavior: smooth;
-      word-break: keep-all;       /* 기본은 단어 단위 줄바꿈 */
+      word-break: keep-all;
       overflow-wrap: break-word;
     }
     h1,h2{ text-wrap: balance; }
@@ -173,7 +178,7 @@
     .process-body ul{ padding-left:0; }
     .process-body li{ margin:.25rem 0; padding:10px 12px; background: rgba(2,6,23,.35); border:1px solid rgba(148,163,184,.16); border-radius:10px; }
 
-    /* 16:9 반응형 임베드 */
+    /* 16:9 반응형 임베드 (이 부분은 내부적으로 자체 비율 유지) */
     .video-wrapper {
       margin-top: 14px;
       position: relative;
@@ -192,22 +197,26 @@
     }
 
     /* ====== 데스크탑 유지 / 모바일 특수 처리 ====== */
-    /* 줄 고정 유틸리티 */
-    .fixwrap {           /* 이 컨테이너 안은 데스크탑 줄 구조 100% 유지 */
-      overflow-x: auto;  /* 모바일에서 가로 스크롤 허용 */
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-    }
-    .hardline {          /* 지정한 줄만 끊기고 나머지는 줄바꿈 금지 */
-      white-space: nowrap;
-      display: inline;
-    }
-    .hardline-block {    /* 줄바꿈을 반드시 이 지점에서만 */
-      white-space: nowrap;
-      display: block;
-    }
+.fixwrap{
+  overflow-x: auto;
+  overflow-y: hidden;              /* ✅ 세로 스크롤 차단 */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;           /* ✅ Firefox 스크롤바 숨김 */
+  -ms-overflow-style: none;        /* ✅ 구형 IE/Edge 숨김 */
+}
+.fixwrap::-webkit-scrollbar{ display: none; }  /* ✅ Chrome/Safari 숨김 */
 
-    /* ====== 태블릿 이하 ====== */
+.hardline { white-space: nowrap; display: inline; }
+.hardline-block { white-space: nowrap; display: block; }
+
+/* 혹시 모를 내부 스크롤바도 같이 비노출 */
+.chart-container, .modal-content { scrollbar-width: none; -ms-overflow-style: none; }
+.chart-container::-webkit-scrollbar, .modal-content::-webkit-scrollbar { display: none; }
+
+/* 카드/리스트는 내부 스크롤 안 만들게 */
+.card, .process-body, .icons, .nav-wrap { overflow: visible; }
+
+    /* (남겨둬도, viewport=1100이라 사실상 발동 안 됨) */
     @media (max-width: 768px) {
       .card { width: 92%; }
       .hero { padding: 0 12px; }
@@ -215,11 +224,8 @@
       .yt-inline { display:block; line-height:1.9; }
       details.process-item summary{ flex-direction:column; align-items:flex-start; gap:4px; }
     }
-
-    /* 📱 모바일 전용: 줄 길이/폰트 **변경 없음**(데스크탑과 동일 유지) */
     @media (max-width: 480px) {
       html, body { overflow-x: hidden; }
-      /* 폰트/문단 변수 오버라이드 없음 = 데스크탑과 동일한 줄폭/줄바꿈 보장 */
     }
   </style>
 </head>
@@ -251,11 +257,9 @@
     <p style="text-align:center; opacity:0.5; font-size:0.8em;">(텍스트를 누르시면 파일이 열립니다!)</p>
   </div>
 
-  <!-- About Me (줄 고정) -->
+  <!-- About Me -->
   <div class="card" id="about">
     <h2>🙋About Me</h2>
-
-    <!-- 데스크탑과 동일한 줄 구조: 아래 줄만 끊기고 그 외엔 줄바꿈 금지 -->
     <div class="fixwrap" aria-label="About Me fixed lines">
       <span class="hardline-block">저는 맡은 작업을 끝까지 완성해야 직성이 풀리는 타입입니다.</span>
       <span class="hardline-block"><span class="highlight" style="font-weight:700;">AI 활용</span>을 어색해하지 않고, 제 것으로 소화할 수 있습니다.</span>
@@ -264,7 +268,7 @@
     </div>
   </div>
 
-  <!-- Skill Chart (예외: 기존 반응형 유지) -->
+  <!-- Skill Chart -->
   <div class="card" id="skills">
     <h2>🛠️기술 & 툴</h2>
     <div class="chart-container">
@@ -272,10 +276,9 @@
     </div>
   </div>
 
-  <!-- 프로젝트 & 작업물 (줄 고정) -->
+  <!-- 프로젝트 & 작업물 -->
   <div class="card" id="portfolio">
     <h2>📂프로젝트 & 작업물</h2>
-
     <div class="fixwrap" aria-label="Portfolio intro fixed line">
       <span class="hardline-block">아래 아이콘을 클릭하면 <span class="highlight" style="font-weight: bold;">작업물 미리보기</span>를 확인 하실 수 있습니다.</span>
     </div>
@@ -301,13 +304,11 @@
     </div>
   </div>
 
-  <!-- 프로젝트 진행 과정 (줄 고정) -->
+  <!-- 프로젝트 진행 과정 -->
   <div class="card" id="process" class="project-desc">
     <h2>📽️프로젝트 진행 과정 (대표 사례)</h2>
-
     <div class="process-section fixwrap" aria-label="Project process fixed lines">
 
-      <!-- 프로젝트 1 -->
       <details class="process-item">
         <summary>
           <span>📂프로젝트 1 – [싫다고 말해_i-dle/뮤직비디오]</span>
@@ -330,7 +331,6 @@
         </div>
       </details>
 
-      <!-- 프로젝트 2 -->
       <details class="process-item">
         <summary>
           <span>📂프로젝트 2 – [취약계층 반려동물 의료비 지원 정책 뉴스]</span>
@@ -354,7 +354,7 @@
       </details>
 
       <div class="fixwrap" style="margin-top:6px;">
-        <span class="hardline-block" style="opacity:.5;">(원하시는 프로젝트를 선택하시면 프로젝트 진행과정이 적힌 폴더가 열립니다!)</span>
+        <span class="hardline-block" style="text-align:center; opacity:.5;">(원하시는 프로젝트를 선택하시면 프로젝트 진행과정이 적힌 폴더가 열립니다!)</span>
       </div>
     </div>
   </div>
