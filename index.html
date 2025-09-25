@@ -203,55 +203,64 @@
   text-justify: inter-word;
    line-height: 1.4
 }
-/* === 1) iOS/모바일 폰트 자동확대(인플레이션) 방지 === */
-html{
-  /* iOS Safari가 작은 화면에서 글자를 임의로 크게 불리는 걸 막음 */
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
+/* === 📱 모바일 전용 반응형 (480px 이하일 때만 적용) === */
+@media (max-width: 480px) {
 
-/* === 2) 카드 안 텍스트가 아래로 쳐져 보이는 문제 보정 === */
-.card{
-  display: flex;             /* 수직 정렬을 위해 */
-  flex-direction: column;
-  justify-content: center;   /* 세로 중앙 정렬 */
-}
-
-/* === 3) 모바일에서 데스크탑과 최대한 비슷한 타이포 스케일 === */
-@media (max-width: 480px){
-  :root{
-    /* 모바일에서 과하게 커지지 않도록 살짝 낮춘 스케일 */
-    --h1: clamp(1.6rem, 5vw + 1rem, 2.2rem);
-    --h2: clamp(1.15rem, 1.8vw + 1rem, 1.45rem);
-    --p:  clamp(.96rem, 0.7vw + .9rem, 1.05rem);
+  /* 📌 전체 기본 글씨 크기, 줄간격 살짝 줄이기 */
+  body {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%; /* iOS 자동 확대 방지 */
   }
-  /* 카드 패딩도 살짝 줄여서 시각적 균형 맞춤 */
-  .card{ padding: clamp(14px, 3.4vw, 22px); }
 
-  /* About/교육 등 본문은 가운데 정렬 유지 */
-  #about p, #education p{ text-align:center; }
+  /* 📌 카드(박스) 전체 레이아웃 조정 */
+  .card {
+    width: 92%;
+    padding: 16px;
+    margin: 18px auto;
+    text-align: center;
+  }
 
-  /* 프로젝트 설명 박스는 가독성을 위해 좌측 정렬 유지 */
-  #process .process-body li{ text-align:left; line-height:1.65; }
+  /* 📌 제목 크기 ↓ 살짝 줄이기 */
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.4rem; margin-bottom: 14px; }
+
+  /* 📌 일반 텍스트 크기 조정 */
+  p, li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  /* 📌 About, 학력, Contact 같은 섹션 중앙 정렬 유지 */
+  #about p,
+  #education p,
+  .contact-info {
+    text-align: center;
+  }
+
+  /* 📌 프로젝트 설명(ul li)은 좌측 정렬로 가독성 확보 */
+  .process-body li {
+    text-align: left;
+    font-size: 0.93rem;
+    line-height: 1.7;
+  }
+
+  /* 📌 차트 & 영상 크기 모바일에 맞게 */
+  .chart-container {
+    height: 280px;
+    width: 100%;
+  }
+  .video-wrapper {
+    padding-bottom: 56.25%; /* 16:9 유지 */
+  }
+
+  /* 📌 하이라이트 박스도 줄바꿈 대응 */
+  .highlight {
+    display: inline-block;
+    padding: 2px 6px;
+    line-height: 1.2;
+  }
 }
-
-/* === 4) 하이라이트가 줄 넘어가도 “박스” 느낌 유지 === */
-.highlight{
-  display:inline-block;      /* 줄바꿈 시도에도 박스 유지 */
-  line-height:1.1;
-  padding: 2px 8px;
-  border-radius: 6px;
-  background: rgba(99,102,241,0.3);
-}
-
-/* === 5) 그래프/영상 섹션 모바일 높이 살짝 축소(덜 답답하게) === */
-@media (max-width: 480px){
-  .chart-container{ height: 300px; }
-  .video-wrapper{ padding-bottom: 56.25%; } /* 16:9 유지 */
-}
-
-/* === 6) 이모지 색상 보호(덮어씌워지는 현상 방지) === */
-h2, details.process-item summary span{ unicode-bidi: isolate; }
 
   </style>
 </head>
