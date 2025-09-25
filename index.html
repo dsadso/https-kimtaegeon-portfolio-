@@ -32,12 +32,10 @@
       color: #e2e8f0;
       text-align: center;
       scroll-behavior: smooth;
-      word-break: keep-all;
+      word-break: keep-all;       /* 기본은 단어 단위 줄바꿈 */
       overflow-wrap: break-word;
     }
     h1,h2{ text-wrap: balance; }
-
-    /* 이모지 색상 유지 */
     h2, details.process-item summary span { unicode-bidi: isolate; }
 
     /* 배경 */
@@ -157,6 +155,7 @@
 
     /* 프로젝트 진행 과정 */
     .process-section{ text-align:left; margin-top:8px; }
+
     details.process-item{
       background: rgba(15,23,42,0.7);
       border:1px solid rgba(148,163,184,0.18);
@@ -169,10 +168,10 @@
     details.process-item summary{ cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:10px; font-weight:800; }
     details.process-item summary::-webkit-details-marker{ display:none; }
     .summary-right{ opacity:.8; font-weight:700; font-size:.95em; }
+
     .process-body{ margin-top:10px; color:#cbd5e1; }
     .process-body ul{ padding-left:0; }
     .process-body li{ margin:.25rem 0; padding:10px 12px; background: rgba(2,6,23,.35); border:1px solid rgba(148,163,184,.16); border-radius:10px; }
-    .process-body li::before{ content:none !important; }
 
     /* 16:9 반응형 임베드 */
     .video-wrapper {
@@ -192,6 +191,22 @@
       border:0; border-radius:12px;
     }
 
+    /* ====== 데스크탑 유지 / 모바일 특수 처리 ====== */
+    /* 줄 고정 유틸리티 */
+    .fixwrap {           /* 이 컨테이너 안은 데스크탑 줄 구조 100% 유지 */
+      overflow-x: auto;  /* 모바일에서 가로 스크롤 허용 */
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+    .hardline {          /* 지정한 줄만 끊기고 나머지는 줄바꿈 금지 */
+      white-space: nowrap;
+      display: inline;
+    }
+    .hardline-block {    /* 줄바꿈을 반드시 이 지점에서만 */
+      white-space: nowrap;
+      display: block;
+    }
+
     /* ====== 태블릿 이하 ====== */
     @media (max-width: 768px) {
       .card { width: 92%; }
@@ -201,46 +216,10 @@
       details.process-item summary{ flex-direction:column; align-items:flex-start; gap:4px; }
     }
 
-    /* 📱 모바일 전용(480px 이하) — 문장 길이 최대화(데스크탑 느낌) */
+    /* 📱 모바일 전용: 줄 길이/폰트 **변경 없음**(데스크탑과 동일 유지) */
     @media (max-width: 480px) {
       html, body { overflow-x: hidden; }
-
-      :root{
-        --card-w: 100%;     /* 카드 폭을 꽉 채워 줄 길이 확보 */
-        --card-pad: 10px;   /* 좌우 여백 축소 */
-        --h1: 1.9rem;
-        --h2: 1.30rem;
-        --p:  clamp(.88rem, 3.2vw, 1rem);  /* 글자 살짝 축소 → 한 줄에 더 많이 */
-      }
-
-      .card{
-        width: 100%;
-        padding-left: var(--card-pad);
-        padding-right: var(--card-pad);
-      }
-
-      /* 문단 폭 제한 제거 → 긴 줄 유지 (데스크탑 느낌) */
-      .card p{
-        max-width: none;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-        line-height: 1.58;
-        letter-spacing: -0.005em;
-      }
-
-      /* 차트 중앙 정렬 + 모바일 높이 */
-      #skills .chart-container{
-        width: 96vw;
-        max-width: 720px;
-        height: 360px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      #skillsChart{ display:block; margin-left:auto; margin-right:auto; }
-
-      .yt-inline{ justify-content: center; text-align:center; }
-      .process-body li{ text-align: left; }
+      /* 폰트/문단 변수 오버라이드 없음 = 데스크탑과 동일한 줄폭/줄바꿈 보장 */
     }
   </style>
 </head>
@@ -272,18 +251,20 @@
     <p style="text-align:center; opacity:0.5; font-size:0.8em;">(텍스트를 누르시면 파일이 열립니다!)</p>
   </div>
 
-  <!-- About Me -->
+  <!-- About Me (줄 고정) -->
   <div class="card" id="about">
     <h2>🙋About Me</h2>
-    <p>
-      저는 맡은 작업을 끝까지 완성해야 직성이 풀리는 타입입니다.<br>
-      <span class="highlight" style="font-size:1.05em; font-weight: bold;">AI 활용</span>을 어색해하지 않고, 제 것으로 소화할 수 있습니다.<br>
-      또한 <span class="highlight">최신 트렌드와 밈을 빠르게 이해</span>하고 이를 작업물에 자연스럽게 반영하여,<br>
-      공감과 재미를 줄 수 있는 사람입니다.
-    </p>
+
+    <!-- 데스크탑과 동일한 줄 구조: 아래 줄만 끊기고 그 외엔 줄바꿈 금지 -->
+    <div class="fixwrap" aria-label="About Me fixed lines">
+      <span class="hardline-block">저는 맡은 작업을 끝까지 완성해야 직성이 풀리는 타입입니다.</span>
+      <span class="hardline-block"><span class="highlight" style="font-weight:700;">AI 활용</span>을 어색해하지 않고, 제 것으로 소화할 수 있습니다.</span>
+      <span class="hardline-block">또한 <span class="highlight">최신 트렌드와 밈을 빠르게 이해</span>하고 이를 <span class="hardline">작업물에 자연스럽게</span> 반영하여,</span>
+      <span class="hardline-block">공감과 재미를 줄 수 있는 사람입니다.</span>
+    </div>
   </div>
 
-  <!-- Skill Chart -->
+  <!-- Skill Chart (예외: 기존 반응형 유지) -->
   <div class="card" id="skills">
     <h2>🛠️기술 & 툴</h2>
     <div class="chart-container">
@@ -291,10 +272,13 @@
     </div>
   </div>
 
-  <!-- Portfolio -->
+  <!-- 프로젝트 & 작업물 (줄 고정) -->
   <div class="card" id="portfolio">
     <h2>📂프로젝트 & 작업물</h2>
-    <p>아래 아이콘을 클릭하면 <span class="highlight" style="font-weight: bold;">작업물 미리보기</span>를 확인 하실 수 있습니다.</p>
+
+    <div class="fixwrap" aria-label="Portfolio intro fixed line">
+      <span class="hardline-block">아래 아이콘을 클릭하면 <span class="highlight" style="font-weight: bold;">작업물 미리보기</span>를 확인 하실 수 있습니다.</span>
+    </div>
 
     <div class="icons">
       <img src="image/prepro.png" alt="프리미어프로" class="icon work"
@@ -305,20 +289,23 @@
            data-url="docs/photoshop12.png">
     </div>
 
-    <p class="yt-inline">
-      작업물 목록은 <span class="highlight" style="font-weight: bold;">유튜브 아이콘
+    <div class="fixwrap" aria-label="YouTube hint fixed line" style="margin-top:8px;">
+      <span class="hardline-block">작업물 목록은 <span class="highlight" style="font-weight: bold;">유튜브 아이콘</span>
         <a href="https://www.youtube.com/playlist?list=PLTmkD0z4EsEaExw1RM1K4Yqs4Np7Bnhgi" target="_blank">
-          <img src="image/youtube.png" alt="유튜브 아이콘"></a><span style="font-size: 0.85em;">(Premiere Pro)</span>
+          <img src="image/youtube.png" alt="유튜브 아이콘" style="vertical-align:middle; width:26px; height:auto;">
+        </a><span style="font-size: 0.85em;">(Premiere Pro)</span>
         <a href="https://www.youtube.com/playlist?list=PLTmkD0z4EsEaw0RcQuvtws-oBCaGos3Sj" target="_blank">
-          <img src="image/youtube.png" alt="유튜브 아이콘"></a><span style="font-size: 0.85em;">(After Effects)</span></span>
-      을 클릭해주세요!
-    </p>
+          <img src="image/youtube.png" alt="유튜브 아이콘" style="vertical-align:middle; width:26px; height:auto;">
+        </a><span style="font-size: 0.85em;">(After Effects)</span> 을 클릭해주세요!
+      </span>
+    </div>
   </div>
 
-  <!-- 프로젝트 진행 과정 -->
+  <!-- 프로젝트 진행 과정 (줄 고정) -->
   <div class="card" id="process" class="project-desc">
     <h2>📽️프로젝트 진행 과정 (대표 사례)</h2>
-    <div class="process-section">
+
+    <div class="process-section fixwrap" aria-label="Project process fixed lines">
 
       <!-- 프로젝트 1 -->
       <details class="process-item">
@@ -328,14 +315,14 @@
         </summary>
         <div class="process-body">
           <ul>
-            <li><strong>개요 :</strong> '싫다고 말해'라는 곡의 제목과 가사의 컨셉과 맞게 광기어린 사랑을 표현한 뮤직비디오.</li>
-            <li><strong>목적 :</strong> 학과 팀플 뮤직비디오 제작, 연출/촬영/편집 분업 (총 제작기간 2주) </li>            
-            <li><strong>역할 :</strong> 출연 및 편집(컷 편집, 컬러 톤 조정, 자막 삽입)</li>
-            <li><strong>과정 :</strong> 연출안 중심으로 촬영 후, 즉흥으로 연출을 변경하여 촬영. 촬영본 중심으로 편집, 실시간 피드백 요청.</li>
-            <li><strong>이슈 :</strong> 연출파트에서 준 여러 피드백들을 영상적으로 어떻게 구현해야 할지 명확한 기준을 세우는 데 어려움이 있었습니다. 또한 편집 과정에서 의견을 실시간으로 조율할 기회가 충분하지 않아, 의도를 정확히 반영하기 위한 소통 방식의 필요성을 느꼈습니다.</li>
-            <li><strong>해결 :</strong> 추상적인 표현을 구체적인 실행 기준으로 전환하기 위해 색감, 톤, 컷 구성 등 여러 스타일의 예시안을 만들어 공유하고, 각 버전에 대해 촬영 담당 팀원과 함께 비교·분석하는 과정을 거쳤습니다. 이를 통해 연출 의도를 구체화하고 최종 방향성을 합의하여 프로젝트를 마무리할 수 있었습니다.</li>
-            <li><strong>결과 :</strong> 프레젠테이션에서 “영상 분위기가 음악과 잘 어울리고, 스토리 전개가 괜찮았다.”는 평가.</li>
-            <li><strong>배운 점 :</strong> 이번 프로젝트를 통해 추상적인 요구를 구체적인 실행 지침으로 해석하는 능력의 중요성을 깨달았습니다. 또한 협업에서는 서로의 의도를 명확히 이해하고 조율할 수 있는 소통 구조가 필수적임을 배우며, 이후 프로젝트에서는 레퍼런스 제시등 먼저 제시하는 방식의 커뮤니케이션 방식을 실천하게 되었습니다.</li>
+            <li class="hardline-block"><strong>개요 :</strong> '싫다고 말해'라는 곡의 제목과 가사의 컨셉과 맞게 광기어린 사랑을 표현한 뮤직비디오.</li>
+            <li class="hardline-block"><strong>목적 :</strong> 학과 팀플 뮤직비디오 제작, 연출/촬영/편집 분업 (총 제작기간 2주)</li>
+            <li class="hardline-block"><strong>역할 :</strong> 출연 및 편집(컷 편집, 컬러 톤 조정, 자막 삽입)</li>
+            <li class="hardline-block"><strong>과정 :</strong> 연출안 중심으로 촬영 후, 즉흥으로 연출을 변경하여 촬영. 촬영본 중심으로 편집, 실시간 피드백 요청.</li>
+            <li class="hardline-block"><strong>이슈 :</strong> 연출파트에서 준 여러 피드백들을 영상적으로 어떻게 구현해야 할지 명확한 기준을 세우는 데 어려움.</li>
+            <li class="hardline-block"><strong>해결 :</strong> 색감/톤/컷 구성 등 여러 스타일의 예시안을 만들어 비교·분석하여 연출 의도 구체화 및 합의.</li>
+            <li class="hardline-block"><strong>결과 :</strong> “영상 분위기가 음악과 잘 어울리고, 스토리 전개가 괜찮았다.”는 평가.</li>
+            <li class="hardline-block"><strong>배운 점 :</strong> 추상적인 요구를 실행 지침으로 해석하는 능력과 레퍼런스 기반 커뮤니케이션의 중요성 체득.</li>
           </ul>
           <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/4sfU6RXp2x4?rel=0" allowfullscreen></iframe>
@@ -351,21 +338,24 @@
         </summary>
         <div class="process-body">
           <ul>
-            <li><strong>개요:</strong> 취약계층에게 반려동물 의료비 지원 정책의 존재 소개 및 시청자들에게 화두를 제시하는 뉴스</li>
-            <li><strong>목적:</strong> 반려동물 분야에 지속적인 관심을 가지고 있던 저는, 이를 사회적 시선에서 다뤄보고자 하는 생각에서 본 프로젝트를 기획했습니다. 특히 ‘취약계층 반려동물 의료비 지원’이라는 주제가 사람마다 서로 다른 입장과 시각을 불러일으킬 수 있다는 점에 주목하여, 다양한 의견을 균형 있게 탐색하고 이를 객관적으로 전달하는 콘텐츠를 제작하는 것을 목표로 했습니다. </li>
-            <li><strong>역할:</strong> 기획/촬영/편집/그래픽</li>
-            <li><strong>진행 과정:</strong> 먼저 국내에서 시행 중인 취약계층 반려동물 의료비 지원 정책의 목적과 주요 내용을 정리한 뒤, 장점을 정리했습니다. 이후 찬성 입장을 가진 이의 의견을 인터뷰하고, 이어서 정책에 대한 우려와 반대 입장을 정리하여 해당 시각을 담은 인터뷰를 진행했습니다. 긍정·부정 시각을 모두 제시한 후, 중립적인 입장의 인터뷰를 통해 다양한 관점을 비교할 수 있도록 구성했습니다. 마지막으로 전체 흐름이 객관성을 유지하도록 영상 구조를 점검하고 서술 표현을 조정하며 최종 편집을 마무리했습니다.</li>
-            <li><strong>이슈:</strong> 해당 정책을 인지하고 있고, 다른 견해를 가진 인터뷰 대상을 찾는게 쉽지 않았습니다.</li>
-            <li><strong>해결:</strong> 우선 반려동물을 키우고 있거나 관심을 가진 사람들을 선별했습니다. 해당 정책을 모르고 있더라도 우선 해당 정책에 대해 객관적으로 설명을 해드린 뒤 각자의 생각을 전달받고 인터뷰를 진행하였습니다.</li>
-            <li><strong>결과:</strong> [정량/정성 성과]</li>
-            <li><strong>배운 점:</strong> [다음 프로젝트에 적용한 개선]</li>
+            <li class="hardline-block"><strong>개요:</strong> 취약계층에게 반려동물 의료비 지원 정책의 존재 소개 및 시청자들에게 화두 제시.</li>
+            <li class="hardline-block"><strong>목적:</strong> 주제의 다양한 입장을 균형 있게 탐색하고 객관적으로 전달하는 콘텐츠 제작.</li>
+            <li class="hardline-block"><strong>역할:</strong> 기획/촬영/편집/그래픽.</li>
+            <li class="hardline-block"><strong>진행 과정:</strong> 정책 목적/내용 정리 → 찬성/우려/중립 인터뷰 구성 → 객관성 유지 점검 후 최종 편집.</li>
+            <li class="hardline-block"><strong>이슈:</strong> 정책 인지자 중 상반된 견해를 가진 인터뷰 대상 섭외의 어려움.</li>
+            <li class="hardline-block"><strong>해결:</strong> 관심군 선별 후 정책 설명 → 각자 견해 인터뷰 진행으로 다양한 관점 확보.</li>
+            <li class="hardline-block"><strong>결과:</strong> [정량/정성 성과]</li>
+            <li class="hardline-block"><strong>배운 점:</strong> [다음 프로젝트에 적용한 개선]</li>
           </ul>
           <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/pix1qy2wcJM?rel=0" allowfullscreen></iframe>
           </div>
         </div>
       </details>
-      <p style="text-align:center; opacity:0.5;">(원하시는 프로젝트를 선택하시면 프로젝트 진행과정이 적힌 폴더가 열립니다!)</p>
+
+      <div class="fixwrap" style="margin-top:6px;">
+        <span class="hardline-block" style="opacity:.5;">(원하시는 프로젝트를 선택하시면 프로젝트 진행과정이 적힌 폴더가 열립니다!)</span>
+      </div>
     </div>
   </div>
 
@@ -388,13 +378,16 @@
   </div>
 
   <script>
+    // AOS init (옵션 필요 시 사용)
+    // AOS.init();
+
     // Typed.js
     var typed = new Typed("#typed", {
       strings: ["저는", "크리에이티브한", "열정적인", "성실한","노력하는"],
       typeSpeed: 80, backSpeed: 50, loop: true
     });
 
-    // Chart.js (모바일에서 라벨 축약 & 폰트/패딩 조정)
+    // Chart.js
     const fullLabels   = ['Premiere Pro','After Effects','Photoshop','AI','Passion','Conscientious & Humorous'];
     const shortLabels  = ['Premiere','AE','PS','AI','Passion','C&H'];
     const skillData    = [80, 75, 70, 85, 100, 100];
@@ -402,13 +395,10 @@
     const ctx = document.getElementById('skillsChart').getContext('2d');
     let skillsChart;
 
-    function isMobile() {
-      return window.matchMedia('(max-width: 480px)').matches;
-    }
+    function isMobile() { return window.matchMedia('(max-width: 480px)').matches; }
 
     function createChart() {
       if (skillsChart) skillsChart.destroy();
-
       const mobile = isMobile();
       const labels = mobile ? shortLabels : fullLabels;
 
@@ -428,10 +418,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          layout: {
-            padding: mobile ? {top: 18, right: 18, bottom: 18, left: 18}
-                            : {top: 10, right: 10, bottom: 10, left: 10}
-          },
+          layout: { padding: mobile ? {top:18,right:18,bottom:18,left:18} : {top:10,right:10,bottom:10,left:10} },
           animation: {
             duration: 600, easing: 'easeOutElastic',
             onProgress: function(anim){
@@ -442,31 +429,18 @@
           },
           scales: {
             r: {
-              angleLines: { color: '#334155' },
-              grid: { color: '#475569' },
+              angleLines: { color: '#334155' }, grid: { color: '#475569' },
               suggestedMin: 0, suggestedMax: 100,
-              pointLabels: {
-                color: '#cbd5e1',
-                padding: mobile ? 8 : 6,
-                font: { size: mobile ? 10 : 12, weight: '600' }
-              },
-              ticks: {
-                stepSize: 20,
-                color: '#cbd5e1',
-                backdropColor: 'transparent',
-                showLabelBackdrop: false,
-                display: true
-              }
+              pointLabels: { color: '#cbd5e1', padding: mobile?8:6, font: { size: mobile?10:12, weight:'600' } },
+              ticks: { stepSize: 20, color: '#cbd5e1', backdropColor: 'transparent', showLabelBackdrop: false }
             }
           },
-          plugins: {
-            legend: { labels: { color: '#e2e8f0', boxWidth: 14, font: { size: mobile ? 10 : 12 } } }
-          }
+          plugins: { legend: { labels: { color: '#e2e8f0', boxWidth: 14, font: { size: mobile?10:12 } } } }
         }
       });
     }
 
-    // Intersection Observer
+    // 카드 관찰 + 차트 생성
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
