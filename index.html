@@ -117,7 +117,7 @@
 
     /* Skill Chart */
     .chart-container{ width: min(640px, 95%); margin: 8px auto 0; position: relative; height: clamp(260px, 58vw, 420px); }
-    #skillsChart{ width: 100% !important; height: 100% !important; }
+    #skillsChart{ width: 100% !important; height: 100% !important; display:block; margin:0 auto; }
 
     /* Contact */
     .contact-info {
@@ -196,25 +196,48 @@
       details.process-item summary{ flex-direction:column; align-items:flex-start; gap:4px; }
     }
 
-    /* === 📱 모바일 전용(폭 480px 이하) – 데스크탑 영향 없이 비율/여백/폰트만 재정의 === */
+    /* === 📱 모바일 전용(폭 480px 이하) – 데스크탑 느낌 그대로 정렬/줄바꿈 재현 === */
     @media (max-width: 480px) {
       html, body { overflow-x: hidden; }
 
       :root{
         --card-w: 94%;
         --card-pad: 14px;
-        --h1: 1.9rem;       /* 히어로 제목 살짝 축소 */
-        --h2: 1.35rem;      /* 섹션 제목 축소 */
-        --p:  0.98rem;      /* 본문 가독성 */
+        --h1: 1.9rem;
+        --h2: 1.35rem;
+        --p:  0.98rem;
       }
 
       .hero{ min-height: 90svh; }
-      p, li{ line-height: 1.65; }
 
-      .chart-container{ height: 300px; width: 100%; }
-      .icons .icon{ width: 64px; }         /* 아이콘 터치 크기 확보 */
-      .contact-info{ gap: 18px; }
-      .process-body li{ text-align: left; } /* 긴 설명 가독성 */
+      /* 문단 줄 길이를 데스크탑과 유사하게 제한 → 같은 느낌의 줄바꿈 */
+      .card p {
+        max-width: 720px;   /* 데스크탑 카드 내 문단 폭에 맞춤 */
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.65;
+        text-align: center;
+      }
+
+      /* 차트 컨테이너/캔버스 완전 중앙 고정 + 모바일 전용 높이 */
+      #skills .chart-container{
+        width: 92vw;
+        max-width: 640px;
+        height: 360px;      /* 모바일에서만 살짝 키워 가독성 */
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #skillsChart{
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
+      }
+
+      /* 아이콘/유튜브 줄 중앙 정렬 유지 */
+      .yt-inline{ justify-content: center; text-align:center; }
+
+      /* 프로젝트 설명은 좌측 정렬 유지(가독성) */
+      .process-body li{ text-align: left; }
     }
   </style>
 </head>
