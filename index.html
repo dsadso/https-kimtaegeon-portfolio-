@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -7,7 +7,7 @@
 
   <!-- AOS -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <!-- Typed.js -->
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
@@ -37,7 +37,7 @@
     }
     h1,h2{ text-wrap: balance; }
 
-    /* ✅ 이모지 색상 유지 */
+    /* 이모지 색상 유지 */
     h2, details.process-item summary span { unicode-bidi: isolate; }
 
     /* 배경 */
@@ -116,14 +116,19 @@
     .icon:hover { transform: scale(1.12); box-shadow: 0 6px 12px rgba(0,0,0,0.3); border-radius: 12px; }
 
     /* Skill Chart */
-    .chart-container{ width: min(640px, 95%); margin: 8px auto 0; position: relative; height: clamp(260px, 58vw, 420px); }
+    .chart-container{
+      width: min(640px, 95%);
+      margin: 8px auto 0;
+      position: relative;
+      height: clamp(260px, 58vw, 420px);
+    }
     #skillsChart{ width: 100% !important; height: 100% !important; display:block; margin:0 auto; }
 
     /* Contact */
     .contact-info {
       display: flex;
       justify-content: center;
-      align-items: center; /* 중앙 정렬 */
+      align-items: center;
       gap: clamp(16px, 6vw, 40px);
       margin-top: 12px;
       font-size: clamp(1rem, .6vw + .9rem, 1.1rem);
@@ -132,7 +137,7 @@
     }
     .contact-item {
       display: flex;
-      align-items: center; /* 아이콘+텍스트 수직 정렬 */
+      align-items: center;
       gap: 15px;
       line-height: 4;
     }
@@ -150,7 +155,7 @@
     .yt-inline img { width: clamp(22px, 4vw, 30px); height: auto; object-fit: contain; transition: transform 0.2s ease, filter 0.2s ease; cursor: pointer; vertical-align: text-bottom; position: relative; top: 0px; }
     .yt-inline img:hover { transform: scale(1.12); filter: brightness(1.15); }
 
-    /* ===== 프로젝트 진행 과정 (프로젝트별, 영상 1개) ===== */
+    /* 프로젝트 진행 과정 */
     .process-section{ text-align:left; margin-top:8px; }
     details.process-item{
       background: rgba(15,23,42,0.7);
@@ -167,13 +172,13 @@
     .process-body{ margin-top:10px; color:#cbd5e1; }
     .process-body ul{ padding-left:0; }
     .process-body li{ margin:.25rem 0; padding:10px 12px; background: rgba(2,6,23,.35); border:1px solid rgba(148,163,184,.16); border-radius:10px; }
-    .process-body li::before{ content:none !important; } /* 왼쪽 점 제거 */
+    .process-body li::before{ content:none !important; }
 
-    /* ★ 반응형 16:9 임베드 (프로젝트당 1개) */
+    /* 16:9 반응형 임베드 */
     .video-wrapper {
       margin-top: 14px;
       position: relative;
-      padding-bottom: 56.25%; /* 16:9 */
+      padding-bottom: 56.25%;
       height: 0;
       overflow: hidden;
       border-radius: 12px;
@@ -187,7 +192,7 @@
       border:0; border-radius:12px;
     }
 
-    /* ====== 태블릿 이하(기존 유지) ====== */
+    /* ====== 태블릿 이하 ====== */
     @media (max-width: 768px) {
       .card { width: 92%; }
       .hero { padding: 0 12px; }
@@ -196,49 +201,42 @@
       details.process-item summary{ flex-direction:column; align-items:flex-start; gap:4px; }
     }
 
-   /* === 📱 모바일 전용(폭 480px 이하) – 데스크탑 느낌 그대로 정렬/줄바꿈 재현 === */
-@media (max-width: 480px) {
-  html, body { overflow-x: hidden; }
+    /* 📱 모바일 전용(480px 이하) — 데스크탑 느낌으로 줄 길이 고정 */
+    @media (max-width: 480px) {
+      html, body { overflow-x: hidden; }
 
-  :root{
-    --card-w: 94%;
-    --card-pad: 14px;
-    --h1: 1.9rem;
-    --h2: 1.35rem;
-    --p:  0.98rem;
-  }
+      :root{
+        --card-w: 94%;
+        --card-pad: 14px;
+        --h1: 1.9rem;
+        --h2: 1.35rem;
+        --p:  0.98rem;
+      }
 
-  .hero{ min-height: 90svh; }
+      .hero{ min-height: 90svh; }
 
-  /* 문단 줄 길이를 데스크탑과 유사하게 제한 → 같은 느낌의 줄바꿈 */
-  .card p {
-    max-width: 720px;   /* 데스크탑 카드 내 문단 폭에 맞춤 */
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.65;
-    text-align: center;
-  }
+      /* 문단 폭을 데스크탑과 유사하게 제한 → 줄바꿈 느낌 동일 */
+      .card p {
+        max-width: 720px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.65;
+        text-align: center;
+      }
 
-  /* 차트 컨테이너/캔버스 중앙 정렬 + 모바일 전용 높이 */
-  #skills .chart-container{
-    width: 92vw;
-    max-width: 640px;
-    height: 360px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  #skillsChart{
-    display:block;
-    margin-left:auto;
-    margin-right:auto;
-  }
+      /* 차트 중앙 정렬 + 모바일 높이 */
+      #skills .chart-container{
+        width: 92vw;
+        max-width: 640px;
+        height: 360px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #skillsChart{ display:block; margin-left:auto; margin-right:auto; }
 
-  /* 아이콘/유튜브 줄 중앙 정렬 유지 */
-  .yt-inline{ justify-content: center; text-align:center; }
-
-  /* 프로젝트 설명은 좌측 정렬(가독성) */
-  .process-body li{ text-align: left; }
-}
+      .yt-inline{ justify-content: center; text-align:center; }
+      .process-body li{ text-align: left; }
+    }
   </style>
 </head>
 <body>
@@ -375,7 +373,7 @@
     </div>
   </div>
 
-  <!-- Modal (아이콘 섹션에서 사용) -->
+  <!-- Modal -->
   <div class="modal" id="modal">
     <div class="modal-content">
       <button id="modalClose" aria-label="close">×</button>
@@ -391,16 +389,28 @@
       typeSpeed: 80, backSpeed: 50, loop: true
     });
 
-    // Chart.js
-    const skillData = [80, 75, 70, 85, 100, 100];
+    // ===== Chart.js (모바일에서 라벨 축약 & 폰트/패딩 조정) =====
+    const fullLabels   = ['Premiere Pro','After Effects','Photoshop','AI','Passion','Conscientious & Humorous'];
+    const shortLabels  = ['Premiere','AE','PS','AI','Passion','C&H'];
+    const skillData    = [80, 75, 70, 85, 100, 100];
+
     const ctx = document.getElementById('skillsChart').getContext('2d');
     let skillsChart;
+
+    function isMobile() {
+      return window.matchMedia('(max-width: 480px)').matches;
+    }
+
     function createChart() {
       if (skillsChart) skillsChart.destroy();
+
+      const mobile = isMobile();
+      const labels = mobile ? shortLabels : fullLabels;
+
       skillsChart = new Chart(ctx, {
         type: 'radar',
         data: {
-          labels: ['Premiere Pro', 'After Effects', 'Photoshop', 'AI', 'Passion', 'Conscientious & Humorous'],
+          labels,
           datasets: [{
             label: 'Skill Level',
             data: [0,0,0,0,0,0],
@@ -411,26 +421,47 @@
           }]
         },
         options: {
-          responsive: true, maintainAspectRatio: false,
-          layout: { padding: { top: 10, right: 10, bottom: 10, left: 10 } },
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: {
+            padding: mobile ? {top: 18, right: 18, bottom: 18, left: 18}
+                            : {top: 10, right: 10, bottom: 10, left: 10}
+          },
           animation: {
             duration: 600, easing: 'easeOutElastic',
-            onProgress: function(anim){ const f = anim.currentStep/anim.numSteps; skillsChart.data.datasets[0].data = skillData.map(v=>v*f); skillsChart.update(); }
+            onProgress: function(anim){
+              const f = anim.currentStep/anim.numSteps;
+              skillsChart.data.datasets[0].data = skillData.map(v=>v*f);
+              skillsChart.update();
+            }
           },
           scales: {
             r: {
-              angleLines: { color: '#334155' }, grid: { color: '#475569' },
+              angleLines: { color: '#334155' },
+              grid: { color: '#475569' },
               suggestedMin: 0, suggestedMax: 100,
-              pointLabels: { color: '#cbd5e1', padding: 6, font: { size: 12, weight: '600' } },
-              ticks: { stepSize: 20, color: '#cbd5e1', backdropColor: 'transparent', showLabelBackdrop: false }
+              pointLabels: {
+                color: '#cbd5e1',
+                padding: mobile ? 8 : 6,
+                font: { size: mobile ? 10 : 12, weight: '600' }
+              },
+              ticks: {
+                stepSize: 20,
+                color: '#cbd5e1',
+                backdropColor: 'transparent',
+                showLabelBackdrop: false,
+                display: true
+              }
             }
           },
-          plugins: { legend: { labels: { color: '#e2e8f0' } } }
+          plugins: {
+            legend: { labels: { color: '#e2e8f0', boxWidth: 14, font: { size: mobile ? 10 : 12 } } }
+          }
         }
       });
     }
 
-    // Intersection Observer
+    // Intersection Observer (보일 때 카드 페이드 인 + 차트 생성)
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -443,7 +474,7 @@
     }, { threshold: 0.3 });
     document.querySelectorAll('.card').forEach(card => observer.observe(card));
 
-    // Modal (아이콘 섹션에서 사용: .work 클릭 시 영상/이미지 분기)
+    // Modal (아이콘 섹션: 영상/이미지 분기)
     const works = document.querySelectorAll(".work");
     const modal = document.getElementById("modal");
     const modalVideo = document.getElementById("modalVideo");
@@ -479,7 +510,7 @@
       window.scrollTo({top: y, behavior: 'smooth'});
     });
 
-    // 리사이즈 시 차트 재계산
+    // 리사이즈 시 차트 재계산 (모바일/데스크탑 라벨 전환 포함)
     let rAF;
     window.addEventListener('resize', () => {
       if (rAF) cancelAnimationFrame(rAF);
