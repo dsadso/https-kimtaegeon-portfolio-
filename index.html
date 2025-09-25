@@ -201,35 +201,38 @@
       details.process-item summary{ flex-direction:column; align-items:flex-start; gap:4px; }
     }
 
-    /* 📱 모바일 전용(480px 이하) — 데스크탑 느낌으로 줄 길이 고정 */
+    /* 📱 모바일 전용(480px 이하) — 문장 길이 최대화(데스크탑 느낌) */
     @media (max-width: 480px) {
       html, body { overflow-x: hidden; }
 
       :root{
-        --card-w: 94%;
-        --card-pad: 14px;
+        --card-w: 100%;     /* 카드 폭을 꽉 채워 줄 길이 확보 */
+        --card-pad: 10px;   /* 좌우 여백 축소 */
         --h1: 1.9rem;
-        --h2: 1.35rem;
-        --p:  0.98rem;
+        --h2: 1.30rem;
+        --p:  clamp(.88rem, 3.2vw, 1rem);  /* 글자 살짝 축소 → 한 줄에 더 많이 */
       }
 
-      .hero{ min-height: 90svh; }
+      .card{
+        width: 100%;
+        padding-left: var(--card-pad);
+        padding-right: var(--card-pad);
+      }
 
-      /* 문단 폭을 데스크탑과 유사하게 제한 → 줄바꿈 느낌 동일 */
-     .card p {
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  line-height: 1.65;
-  font-size: clamp(0.95rem, 2.8vw, 1.05rem);
-}
-
+      /* 문단 폭 제한 제거 → 긴 줄 유지 (데스크탑 느낌) */
+      .card p{
+        max-width: none;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        line-height: 1.58;
+        letter-spacing: -0.005em;
+      }
 
       /* 차트 중앙 정렬 + 모바일 높이 */
       #skills .chart-container{
-        width: 92vw;
-        max-width: 640px;
+        width: 96vw;
+        max-width: 720px;
         height: 360px;
         margin-left: auto;
         margin-right: auto;
@@ -391,7 +394,7 @@
       typeSpeed: 80, backSpeed: 50, loop: true
     });
 
-    // ===== Chart.js (모바일에서 라벨 축약 & 폰트/패딩 조정) =====
+    // Chart.js (모바일에서 라벨 축약 & 폰트/패딩 조정)
     const fullLabels   = ['Premiere Pro','After Effects','Photoshop','AI','Passion','Conscientious & Humorous'];
     const shortLabels  = ['Premiere','AE','PS','AI','Passion','C&H'];
     const skillData    = [80, 75, 70, 85, 100, 100];
@@ -463,7 +466,7 @@
       });
     }
 
-    // Intersection Observer (보일 때 카드 페이드 인 + 차트 생성)
+    // Intersection Observer
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -476,7 +479,7 @@
     }, { threshold: 0.3 });
     document.querySelectorAll('.card').forEach(card => observer.observe(card));
 
-    // Modal (아이콘 섹션: 영상/이미지 분기)
+    // Modal
     const works = document.querySelectorAll(".work");
     const modal = document.getElementById("modal");
     const modalVideo = document.getElementById("modalVideo");
@@ -512,7 +515,7 @@
       window.scrollTo({top: y, behavior: 'smooth'});
     });
 
-    // 리사이즈 시 차트 재계산 (모바일/데스크탑 라벨 전환 포함)
+    // 리사이즈 시 차트 재계산
     let rAF;
     window.addEventListener('resize', () => {
       if (rAF) cancelAnimationFrame(rAF);
