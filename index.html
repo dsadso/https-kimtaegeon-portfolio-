@@ -216,13 +216,15 @@
       .hero{ min-height: 90svh; }
 
       /* 문단 폭을 데스크탑과 유사하게 제한 → 줄바꿈 느낌 동일 */
-      .card p {
-        max-width: 720px;
-        margin-left: auto;
-        margin-right: auto;
-        line-height: 1.65;
-        text-align: center;
-      }
+     .card p {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  line-height: 1.65;
+  font-size: clamp(0.95rem, 2.8vw, 1.05rem);
+}
+
 
       /* 차트 중앙 정렬 + 모바일 높이 */
       #skills .chart-container{
